@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Finance Manager Dashboard</title>
+</head>
+<body>
+    <h1>Finance Dashboard</h1>
+    {% if alert %}
+    <div style="color: red;">Budget Exceeded!</div>
+    {% endif %}
+    <h2>Total Expenses: {{ expenses|sum(attribute='amount') }}</h2>
+    <h2>Predicted Next Month Spending: {{ prediction }}</h2>
+    <form method="post">
+        Date: <input type="date" name="date">
+        Amount: <input type="number" step="0.01" name="amount">
+        Description: <input type="text" name="description">
+        <button type="submit">Add Expense</button>
+    </form>
+    <h2>Expense List</h2>
+    <ul>
+        {% for expense in expenses %}
+        <li>{{ expense['date'] }} - {{ expense['amount'] }} - {{ expense['category'] }} - {{ expense['description'] }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Goals</h2>
+    <form method="post" action="/goals">
+        <input type="text" name="goal">
+        <button type="submit">Add Goal</button>
+    </form>
+    <ul>
+        {% for g in goals %}
+        <li>{{ g }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
